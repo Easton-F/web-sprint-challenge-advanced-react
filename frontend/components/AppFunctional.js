@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+
+const URL = 'http://localhost:9000/api/result'
 
 // Suggested initial states
 const initialMessage = ''
@@ -38,7 +41,7 @@ export default function AppFunctional(props) {
     setX(initialX);
     setY(initialY);
 
-    console.log(email)
+    console.log('email value:', email)
   }
 
   function getNextIndex(direction) {
@@ -94,12 +97,22 @@ export default function AppFunctional(props) {
 
   function onChange(evt) {
     // You will need this to update the value of the input.
-    setEmail(evt.target.value);
+    const { value } = evt.target
+    setEmail(value);
     console.log(email);
   }
 
   function onSubmit(evt) {
-    // Use a POST request to send a payload to the server.
+    // Use a POST request to send a payload to the server.\
+    evt.preventDefault();
+    axios.post(URL, { "x": x, "y": y, "steps": steps, "email": email})
+      .then(res => {
+        reset();
+        setMessage(res.data.message)
+      })
+      .catch(err => {
+        setMessage(err.response.data.message)
+      })
   }
 
   return (
