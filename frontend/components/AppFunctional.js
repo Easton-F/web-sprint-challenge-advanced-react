@@ -5,37 +5,86 @@ const initialMessage = ''
 const initialEmail = ''
 const initialSteps = 0
 const initialIndex = 4 // the index the "B" is at
+const initialX = 2
+const initialY = 2
 
 export default function AppFunctional(props) {
   const [message, setMessage] = useState(initialMessage);
   const [index, setIndex] = useState(initialIndex);
   const [email, setEmail] = useState(initialEmail);
   const [steps, setSteps] = useState(initialSteps);
+  const [x, setX] = useState(initialX);
+  const [y, setY] = useState(initialY);
+
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
+    return `Coordinates (${x}, ${y})`;
   }
 
-  function getXYMessage() {
+  //function getXYMessage() {
     // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
     // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
     // returns the fully constructed string.
-  }
+  //}
 
   function reset() {
     // Use this helper to reset all states to their initial values.
+    setMessage(initialMessage);
+    setIndex(initialIndex);
+    setEmail(initialEmail);
+    setSteps(initialSteps);
+    setX(initialX);
+    setY(initialY);
   }
 
   function getNextIndex(direction) {
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
     // this helper should return the current index unchanged.
+    if (direction === 'left') {
+      if (x <= 1){
+        return setMessage("Can't go Left");
+      }
+     setX(x - 1);
+     setSteps(steps + 1);
+     setMessage(initialMessage);
+    }
+    if (direction === 'right') {
+      if (x >= 3){
+        return setMessage("Can't go Right");
+      }
+     setX(x + 1);
+     setSteps(steps + 1);
+     setMessage(initialMessage);
+    }
+    if (direction === 'up') {
+      if (y <= 1){
+        return setMessage("Can't go Up");
+      }
+     setY(y - 1);
+     setSteps(steps + 1);
+     setMessage(initialMessage);
+    }
+    if (direction === 'down') {
+      if (y >= 3){
+        return setMessage("Can't go Down");
+      }
+     setY(y + 1);
+     setSteps(steps + 1);
+     setMessage(initialMessage);
+    }
+    console.log(direction)
   }
 
   function move(evt) {
     // This event handler can use the helper above to obtain a new index for the "B",
     // and change any states accordingly.
+    getNextIndex(evt.target.id)
+      
+    
+  
   }
 
   function onChange(evt) {
@@ -49,8 +98,8 @@ export default function AppFunctional(props) {
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Coordinates (2, 2)</h3>
-        <h3 id="steps">You moved 0 times</h3>
+        <h3 id="coordinates">{getXY()}</h3>
+        <h3 id="steps">You moved {steps} times</h3>
       </div>
       <div id="grid">
         {
@@ -62,14 +111,14 @@ export default function AppFunctional(props) {
         }
       </div>
       <div className="info">
-        <h3 id="message"></h3>
+        <h3 id="message">{message}</h3>
       </div>
       <div id="keypad">
-        <button id="left">LEFT</button>
-        <button id="up">UP</button>
-        <button id="right">RIGHT</button>
-        <button id="down">DOWN</button>
-        <button id="reset">reset</button>
+        <button onClick={move} id="left">LEFT</button>
+        <button onClick={move} id="up">UP</button>
+        <button onClick={move} id="right">RIGHT</button>
+        <button onClick={move} id="down">DOWN</button>
+        <button onClick={reset} id="reset">reset</button>
       </div>
       <form>
         <input id="email" type="email" placeholder="type email"></input>
