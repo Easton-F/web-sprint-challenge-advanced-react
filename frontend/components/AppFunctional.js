@@ -52,6 +52,7 @@ export default function AppFunctional(props) {
      setX(x - 1);
      setSteps(steps + 1);
      setMessage(initialMessage);
+     setIndex(index - 1);
     }
     if (direction === 'right') {
       if (x >= 3){
@@ -60,6 +61,7 @@ export default function AppFunctional(props) {
      setX(x + 1);
      setSteps(steps + 1);
      setMessage(initialMessage);
+     setIndex(index + 1);
     }
     if (direction === 'up') {
       if (y <= 1){
@@ -68,6 +70,7 @@ export default function AppFunctional(props) {
      setY(y - 1);
      setSteps(steps + 1);
      setMessage(initialMessage);
+     setIndex(index - 3);
     }
     if (direction === 'down') {
       if (y >= 3){
@@ -76,8 +79,10 @@ export default function AppFunctional(props) {
      setY(y + 1);
      setSteps(steps + 1);
      setMessage(initialMessage);
+     setIndex(index + 3);
     }
     console.log(direction)
+    console.log(index)
   }
 
   function move(evt) {
@@ -106,8 +111,8 @@ export default function AppFunctional(props) {
       <div id="grid">
         {
           [0, 1, 2, 3, 4, 5, 6, 7, 8].map(idx => (
-            <div key={idx} className={`square${idx === 4 ? ' active' : ''}`}>
-              {idx === 4 ? 'B' : null}
+            <div key={idx} className={`square${idx === index ? ' active' : ''}`}>
+              {idx === index ? 'B' : null}
             </div>
           ))
         }
