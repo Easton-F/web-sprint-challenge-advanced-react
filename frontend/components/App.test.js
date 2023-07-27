@@ -4,8 +4,15 @@ import AppFunctional from "./AppFunctional";
 import 'jest-dom/extend-expect';
 
 // Write your tests here
-test('renders the AppFunctional component', () => {
+test('submit button renders', () => {
   render(<AppFunctional />)
+
+  expect(screen.getByTestId('submit')).toBeInTheDocument();
 });
 
+test('reset button renders', () => {
+  render(<AppFunctional />)
+
+  expect(screen.getByTestId('reset')).toBeInTheDocument();
+});
 
