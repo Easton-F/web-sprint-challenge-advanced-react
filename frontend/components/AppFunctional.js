@@ -107,7 +107,7 @@ export default function AppFunctional(props) {
     evt.preventDefault();
     axios.post(URL, { "x": x, "y": y, "steps": steps, "email": email})
       .then(res => {
-        reset();
+        setEmail(initialEmail);
         setMessage(res.data.message)
       })
       .catch(err => {
@@ -119,7 +119,7 @@ export default function AppFunctional(props) {
     <div id="wrapper" className={props.className}>
       <div className="info">
         <h3 id="coordinates">{getXYMessage()}</h3>
-        <h3 id="steps">You moved {steps} times</h3>
+        <h3 id="steps">{`You moved ${steps} ${steps === 1 ? 'time' : 'times'}`}</h3>
       </div>
       <div id="grid">
         {
@@ -141,7 +141,7 @@ export default function AppFunctional(props) {
         <button onClick={reset} id="reset">reset</button>
       </div>
       <form onSubmit={onSubmit}>
-        <input onChange={onChange} id="email" type="email" placeholder="type email"></input>
+        <input onChange={onChange} id="email" type="email" placeholder="type email" value={email}></input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
